@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1>Semi-auto seed data generation</h1>
+
+<p>Current single model: {{ single_model_score }}</p>
+
+<p><a class="btn btn-primary" href="{{ url_for('generate_single_model') }}">Train new model</a></p>
+
+<table class="table table-striped table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>Bug</th>
+      <th colspan="3">Generate</th>
+      <th>Sensitivity</th>
+      <th>Hits</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for bug in bugs %}
+      <tr>
+        <td><b>{{ bug }}</b></td>
+        <td><a href="{{ url_for('naivebug', bugname=bug) }}">Naive</a></td>
+        <td><a href="{{ url_for('singlebug', bugname=bug) }}">Single</a></td>
+        <td><a href="{{ url_for('targetedbug', bugname=bug) }}">Targeted</a></td>
+        <td><a href="{{ url_for('fitbug', bugname=bug) }}">{{ scores[bug] }}</a></td>
+        <td>{{ pos[bug] }}</td>
+        <td>{{ total[bug] }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

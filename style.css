@@ -1,0 +1,176 @@
+.subheader {
+    font-size: 16px;
+    max-width: 620px;
+    margin: 0 auto;
+    padding-top: 10px;
+    color: #ababab;
+    font-weight: bolder;
+}
+.explanation {
+    font-size: 12px;
+    max-width: 620px;
+    margin: 0 auto;
+    padding-top: 10px;
+    color: #ababab;
+    font-weight: 300;
+}
+#footer {
+    font-size: 12px;
+    text-align: left;
+    padding-bottom: 0px;
+    padding-top: 10px;
+    font-weight: 300;
+}
+svg {
+    font-size: 12px;
+    margin: 0 auto;
+    padding-top: 10px;
+    color: #ababab;
+    font-weight: 300;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.axis text {
+    fill: #000;
+}
+.axis .tick line {
+    stroke: rgba(0, 0, 0, 0.1);
+}
+.area {
+    opacity: 0.7;
+    stroke-width: 2;
+}
+.tooltipline {
+    stroke: #ababab;
+}
+.tooltipline text {
+    font-size: 12px;
+    stroke: #ababab;
+}
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    min-width: 60px;
+    min-height: 15px;
+    padding: 2px;
+    background: #e0e0e0;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+    font-size: 12px;
+    font-weight: 100;
+}
+#legend {
+    position: fixed;
+    top: 100px;
+    right: 0px;
+    width: 200px;
+    height: 280px;
+    z-index: 100000;
+    overflow: visible;
+    cursor: pointer;
+}
+#checkbox {
+    margin: 1.5em;
+    font-size: 14px;
+    color: #ababab;
+    font-weight: 500;
+}
+input[type=checkbox]:not(old) {
+    width: 28px;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+}
+input[type=checkbox]:not(old) + label {
+    display: inline-block;
+    margin-left: -28px;
+    padding-left: 28px;
+    background: url('http://i68.tinypic.com/15yy8ug.jpg') no-repeat 0 0;
+    line-height: 24px;
+}
+input[type=checkbox]:not(old):checked + label {
+    background-position: 0 -24px;
+}
+.Switch {
+    position: relative;
+    display: inline-block;
+    font-size: 12px;
+    height: 18px;
+    padding: 6px 6px 6px 6px;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1), inset 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+.Switch span {
+    display: inline-block;
+    width: 45px;
+}
+.Switch .Toggle {
+    position: absolute;
+    top: 1px;
+    width: 47px;
+    height: 25px;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    background: white;
+    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.5);
+    z-index: 999;
+    -webkit-transition: all 0.15s ease-in-out;
+    -moz-transition: all 0.15s ease-in-out;
+    -o-transition: all 0.15s ease-in-out;
+    -ms-transition: all 0.15s ease-in-out;
+}
+.Switch.On .Toggle {
+    left: 2%;
+}
+.Switch.Off .Toggle {
+    left: 51%;
+}
+.brush .extent {
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
+}
+.resize {
+    display: inline !important;
+    /* show when empty */
+    
+    fill: #7A7A7A;
+    fill-opacity: 1;
+    stroke: #7A7A7A;
+    stroke-width: 2px;
+}
+.d3-context-menu {
+    background: #e0e0e0;
+    border: 0px;
+    border-radius: 8px;
+    position: absolute;
+    display: none;
+    min-width: 50px;
+    z-index: 1200;
+}
+.d3-context-menu a {
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    padding: 2px;
+    font-size: 12px;
+    font-weight: 100;
+}
+.d3-context-menu ul {
+    list-style-type: none;
+    margin: 4px 0px;
+    padding: 0px;
+    cursor: default;
+}
+.d3-context-menu ul li:hover {
+    background-color: #4677f8;
+    color: #fefefe;
+    cursor: pointer;
+}

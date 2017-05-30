@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Neglected bugs</title>
+  <style>
+
+   body {
+       font-family: 'Open Sans', sans-serif;
+       text-align: center;
+   }
+   #title {
+       font-size: 24px;
+       padding-bottom: 30px;
+       padding-top: 50px;
+       font-weight: 300;
+   }
+   #intro,
+   #chart1,
+   #chart2 {
+       height: 100vh;
+   }
+   #introp {
+       font-size: 14px;
+       max-width: 800px;
+       height: 30%;
+       margin: 0 auto;
+       padding-top: 10px;
+       padding-bottom: 50px;
+       color: #999999;
+       font-weight: 300;
+       line-height: 30px;
+       text-align: justify;
+   }
+   #intro a {
+       margin: 18%;
+       font-size: 22px;
+       font-weight: bolder;
+       background-color: white;
+       padding: 14px 25px;
+       border-style: ridge;
+       border-color: #cccccc;
+       border-width: 2px
+   }
+   #course {
+       font-size: 12px;
+       color: grey;
+       text-align: left;
+       position: fixed;
+       bottom: 0;
+   }
+   a {
+       color: #5900b3;
+   }
+   a:hover {
+       color: #b300b3;
+   }
+   a:active {
+       color: #ff3300;
+   }
+   #logos {
+       margin: 10%;
+   }
+   .links {
+       padding: 2%;
+       position: relative;
+   }
+   .links .left {
+       position: absolute;
+       bottom: 0;
+       left: 0;
+   }
+   .links .right {
+       position: absolute;
+       bottom: 0;
+       right: 0;
+   }
+  </style>
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js">
+  </script>
+  <script src="http://d3js.org/d3.v3.js">
+  </script>
+  <script src="d3-context-menu.js">
+  </script>
+</head>
+<body>
+  <div id='intro'>
+    <div id="title">
+      Neglected bugs
+    </div>
+    <p id='introp'>An exciting new application of synthetic biology is microbiome therapeutics: modulating the gut microbiome structure using engineered bacteria. One crucial aspect of developing microbiome therapeutics is selecting the right platform strains. Here, we are using d3.js to visualize text mining data on publications on gene editing of native gut microbes. The output can be used to determine the best candidate platform strains for microbiome therapeutics applications and to keep track of the latest achievements in the field.<br></p><a href="#chart1">Timeseries</a> <a href="#chart2">Barchart</a>
+    <div id='logos'>
+      <img alt="DTU logo" src="http://www.foodcomp.dk/images/DTUfrisew800.png" style="width:25%;height:8%:text-align:right;"> <!-- <img src="http://www.sysbio.se/images/logos/cfb_logo.png" alt="CfB logo" style="width:9%;height:0.5%:text-align:left;"> -->
+    </div>
+    <p id='course'>DTU course 02806 Social data analysis and visualization</p>
+  </div>
+  <script>
+
+  $(document)
+    .ready(function () {
+            $(document)
+      // Hide legend when not viewing graph
+                .on('scroll', function () {
+                    if ($(this).scrollTop() >= $('#chart1').position().top / 1.5) {
+                        hideLegend();
+                    } else {
+                        completelyHideLegend();
+                    }
+                })
+            // Add smooth scrolling to all links
+        // https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_eff_animate_smoothscroll
+            $("a")
+                .on('click', function (event) {
+                    // Make sure this.hash has a value before overriding default behavior
+                    if (this.hash !== "") {
+                        // Prevent default anchor click behavior
+                        event.preventDefault();
+
+                        // Store hash
+                        var hash = this.hash;
+
+                        // Using jQuery's animate() method to add smooth page scroll
+                        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                        $('html, body')
+                            .animate({
+                                scrollTop: $(hash)
+                                    .offset()
+                                    .top
+                            }, 800, function () {
+
+                                // Add hash (#) to URL when done scrolling (default click behavior)
+                                window.location.hash = hash;
+                            });
+                    } // End if
+                });
+    });
+  // Data viz color scheme:
+  var colorScale={'Bacteroidetes':'990000','Firmicutes': 'FF9900', 'Proteobacteria': '3366CC', 'Actinobacteria': '99CC33', "Spirochaetes":'660066', "Fusobacteria":'CC3399'}, 
+  proportions={'Bacteroidetes':5,'Firmicutes': 3.6, 'Proteobacteria': 0.15, 'Actinobacteria': 0.08, "Spirochaetes":0.01, "Fusobacteria":0.02},
+  dataset='Project_data/predicted_articles.txt';
+
+  </script>
+  <div id="legend"></div>
+  <div id="chart1">
+    <div class="subheader">
+      Publications per month
+    </div>
+    <div id="checkbox">
+      <input checked="true" id="option1" name="field" onclick="if (this.checked) document.getElementById('option2').checked = false;" type="checkbox" value="phylum"> <label for="option1">Phylum</label> <input id="option2" name="field" onclick="if (this.checked) document.getElementById('option1').checked = false;" type="checkbox" value="cumulative"> <label for="option2">Cumulative</label>
+    </div>
+    <div class="Switch Off" style='float:left; margin-left:20px'>
+      <div class="Toggle"></div><span class="On" id='#multi'>Multi</span> <span class="Off" id='#stacked'>Stacked</span>
+    </div>
+    <div id='chart1chart'>
+      <script src='timeseries.js'>
+      </script>
+    </div>
+    <div class="explanation">
+      Right-click on chart to see publications.<br>
+      Toggle switch to change between multi-area and stacked phylum-based view<br>
+      Use checkbox to change between phylum-based and cumulative view<br>
+      Hover over legend to expand it.
+    </div>
+    <div class='links'>
+      <a class='left' href="#intro">Top&#x21E7</a> <a class='right' href="#chart2">Barchart&#x21E9</a>
+    </div>
+  </div>
+  <div id="chart2" style='margin-top:50px'>
+    <div class="subheader">
+      Publications per genus
+    </div>
+    <div id='chart2chart' style='margin-top:50px'>
+      <script src='barchart.js'>
+      </script>
+    </div>
+    <div class="explanation">
+      Use the minichart to work zoom in and center.<br>
+      Hover over legend to expand it.
+    </div>
+    <div class='links'>
+      <a class='left' href="#intro">Top&#x21E7</a> <a class='right' href="#chart1">Timeseries&#x21E7</a>
+    </div>
+  </div>
+</body>
+</html>

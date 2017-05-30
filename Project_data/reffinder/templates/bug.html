@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Semi-auto reference classifier</title>
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script
+		  src="https://code.jquery.com/jquery-3.2.1.min.js"
+		  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		  crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='mousetrap.min.js') }}"></script>
+
+    <script>
+// -----
+var bugSelected = false;
+var engSelected = false;
+
+function toggleIsBug() {
+  bugSelected = !bugSelected;
+  $('#bugBtn').toggleClass('btn-primary');
+  $('#bugBtn').toggleClass('btn-success');
+  $('#bugIcon').toggleClass('glyphicon-remove');
+  $('#bugIcon').toggleClass('glyphicon-ok');
+  $('#isBug').val(bugSelected);
+}
+
+function toggleIsEng() {
+  engSelected = !engSelected;
+  $('#engBtn').toggleClass('btn-primary');
+  $('#engBtn').toggleClass('btn-success');
+  $('#engIcon').toggleClass('glyphicon-remove');
+  $('#engIcon').toggleClass('glyphicon-ok');
+  $('#isEng').val(engSelected);
+}
+
+Mousetrap.bind('1', toggleIsBug);
+Mousetrap.bind('2', toggleIsEng);
+Mousetrap.bind('right', function() {
+  $('#target').submit();
+});
+
+Mousetrap.bind('3', function() {
+  $('#selectBug').val("Escherichia");
+});
+
+// -----
+    </script>
+
+  </head>
+  <body>
+    <div class="container-fluid myContainer">
+      <h1>Searching: {{ current_bug }} ({{ pos }} / {{ n }})</h1>
+      <p><a href="{{ url_for('index') }}">Home</a>
+      <h2>{{ title|safe }}</h2>
+
+      <p>{{ abstract|safe }}</p>
+      <p>PMID: <a href="https://www.ncbi.nlm.nih.gov/pubmed/{{ pmid }}">{{ pmid }}</a></p>
+      <p>Probability: {{ proba }}</p>
+
+      <form id="target" action="{{ return_url }}" method="post">
+        <div class="row">
+          <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="bugBtn" onclick="toggleIsBug();">
+              <span class="glyphicon glyphicon-remove" id="bugIcon"></span>
+            </button>
+          </div>
+          <div class="col-sm-10">
+              <button class="btn btn-link" role="button">Is</button>
+              <select name="bugname" id="selectBug">
+                {% for bug in bugs %}
+                    <option value="{{ bug }}" {% if bug == current_bug %}selected="true"{% endif %}>{{ bug }}</option>
+                {% endfor %}
+              </select>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:5px;" onclick="toggleIsEng();">
+          <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" id="engBtn">
+              <span class="glyphicon glyphicon-remove" id="engIcon"></span>
+            </button>
+          </div>
+          <div class="col-sm-10">
+            <button class="btn btn-link" role="button">Is Engineering</button>
+          </div>
+        </div>
+
+        <input type="hidden" name="isBug" value="false" id="isBug" />
+        <input type="hidden" name="isEng" value="false" id="isEng" />
+        <input type="hidden" name="pmid" value="{{ pmid }}" />
+        <div class="row" style="margin-top:5px;">
+          <div class="col-sm-1">
+            <button type="submit" class="btn btn-success">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <p>&nbsp;</b>
+      <p>Go to: <a href="{{ next_url }}">{{ next_bug }}</a></p>
+
+    </div>
+
+  </body>
+</html>
